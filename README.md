@@ -30,6 +30,6 @@ lanyard.on("INIT_STATE", (data) => {
 })
 ```
 
-# Licse
+# License
 
 Distributed under the [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html) License. See `LICENSE` for more information.
