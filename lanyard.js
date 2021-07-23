@@ -27,7 +27,7 @@ class Lanyard {
             }
           }));
           setInterval(() => {
-            lanyard.send(JSON.stringify({
+            this.lanyard.send(JSON.stringify({
               op: this.opCodes.HEARTBEAT
             }))
           }, parsedData.d.heartbeat_interval);
