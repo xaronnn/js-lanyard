@@ -9,8 +9,16 @@
 <body>
     <script src="https://cdn.xaron.pw/lanyard.min.js"></script>
     <script type="text/javascript">
-        const lanyard = new Lanyard("852607653205245993");
-        lanyard.listen((data) => {
+        const lanyard = new Lanyard("213325478096797697");
+
+        //HTTP REQUEST
+        (async () => {
+            const data = await lanyard.fetch();
+            console.log(data);
+        })();
+
+        //SOCKET CONNECTION [INIT_STATE, PRESENCE_UPDATE, ALL]
+        lanyard.on("INIT_STATE", (data) => {
             console.log(data);
         })
     </script>
