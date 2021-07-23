@@ -40,10 +40,3 @@ class Lanyard {
   }
   
 }
-
-
-const lanyard = new Lanyard("450421563267874817");
-
-lanyard.listen((data) => {
-  console.log(data);
-})
