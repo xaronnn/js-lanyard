@@ -1,8 +1,7 @@
 "use strict";
 
 class Lanyard {
-  #version = "1.0";
-
+  
   constructor(id) {
     if(!id) return;
     this.id = id;
@@ -39,4 +38,12 @@ class Lanyard {
       }
     }
   }
+  
 }
+
+
+const lanyard = new Lanyard("450421563267874817");
+
+lanyard.listen((data) => {
+  console.log(data);
+})
