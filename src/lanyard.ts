@@ -1,11 +1,17 @@
-"use strict";
+// webpack is setup so that node-fetch module is expected to be installed on the server-side. Otherwise browser.js will use the native fetch.
+const fetchUrl = require("node-fetch") || require("node-fetch/browser.js")
+// webpack is setup so that node.js file expected to be installed on the server-side. Otherwise the broswer.js file will use the native WebSocket.
+const ws = require("isomorphic-ws/node.js") || require("isomorphic-ws/browser.js")
+import { author, version } from '../package.json'
+import { Response } from 'node-fetch'; // Typings for Line 114
 
-class Lanyard {
-
-    #version = "1.1";
-    #author = "XARON";
-    #socket = "wss://api.lanyard.rest/socket";
-    #api = "https://api.lanyard.rest/v1/users/";
+export default class Lanyard {
+    id: string;
+    #version = version;
+    #author = author;
+    #socket: WebSocket;
+    #socketUrl = "wss://api.lanyard.rest/socket";
+    #api = "https://api.lanyard.rest/v1/users/"
     #opCodes = {
         INFO: 0,
         HELLO: 1,
@@ -13,20 +19,17 @@ class Lanyard {
         HEARTBEAT: 3,
     }
 
-    constructor(id, compress = false) {
-        if (!id) return;
+    constructor(id: string, compress = false) {
+        if (id === undefined) throw new Error("No ID supplied");
         this.id = id;
-        this.#socket = (compress ? this.#socket + "?compression=zlib_json" : this.#socket);
+        this.#socketUrl = (compress ? this.#socketUrl + "?compression=zlib_json" : this.#socketUrl);
+        this.#socket = new ws(this.#socketUrl);
         console.log("[Lanyard] Construct success. (JS-Lanyard/" + this.#version + " by " + this.#author + ")");
     }
 
-    on(type, x) {
-        const supportsWebSocket = "WebSocket" in window || "MozWebSocket" in window;
-        if (!supportsWebSocket) throw new Error("Browser doesn't support WebSocket connections.");
-        this.#socket = new WebSocket(this.#socket);
-        this.#socket.onmessage = ({
-            data
-        }) => {
+    on(type: "INIT_STATE" | "PRESENCE_UPDATE" | "ALL", callback: (data: unknown) => unknown) {
+        this.#socket.onmessage = (message: MessageEvent<string>) => {
+            const data = message.data
             const parsedData = JSON.parse(data);
             switch (type) {
                 case "INIT_STATE":
@@ -45,7 +48,7 @@ class Lanyard {
                             }, parsedData.d.heartbeat_interval);
                             break;
                         case this.#opCodes.INFO:
-                            x({
+                            callback({
                                 "id": parsedData.d.discord_user.id,
                                 "username": parsedData.d.discord_user.username + "#" + parsedData.d.discord_user.discriminator,
                                 "avatar": parsedData.d.discord_user.avatar,
@@ -72,7 +75,7 @@ class Lanyard {
                             }, parsedData.d.heartbeat_interval);
                             break;
                         case this.#opCodes.INFO:
-                            x({
+                            callback({
                                 "status": parsedData.d.discord_status
                             })
                             break;
@@ -94,7 +97,7 @@ class Lanyard {
                             }, parsedData.d.heartbeat_interval);
                             break;
                         case this.#opCodes.INFO:
-                            x(parsedData.d);
+                            callback(parsedData.d);
                             break;
                     }
                     break;
@@ -105,15 +108,16 @@ class Lanyard {
         }
     }
 
-    async fetch(id = null) {
+    async fetch(id?: string) {
         const url = (id ? this.#api + id : this.#api + this.id);
-        let data = null;
-        await fetch(url).then(response => response.json()).then((response) => {
+        let data: any = {};
+        let errorMessage: unknown
+        await fetchUrl(url).then((response: Response) => response.json()).then((response: unknown) => {
             data = response;
-        }).catch((err) => {
-            data.error.message = err;
+        }).catch((err: unknown) => {
+            errorMessage = err;
         });
-        return (data.success ? data.data : data.error.message);
+        return (data.success ? data.data : errorMessage);
     }
 
 }

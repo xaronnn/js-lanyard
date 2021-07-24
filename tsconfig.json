@@ -1,0 +1,9 @@
+{
+    "extends": "@tsconfig/node12/tsconfig.json",
+    "include": ["src", "example/node.js"],
+    "compilerOptions": {
+        "lib": ["DOM"],
+        "declaration": true,
+        "resolveJsonModule": true
+    }
+}

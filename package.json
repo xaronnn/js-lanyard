@@ -1,0 +1,38 @@
+{
+  "name": "js-lanyard",
+  "version": "2.0.0",
+  "description": "Use Lanyard in your Web App. [Phineas](https://github.com/Phineas) - Creator of [Lanyard API](https://github.com/Phineas/lanyard)",
+  "main": "dist/js-lanyard.js",
+  "types": "dist/js-lanyard.d.ts",
+  "dependencies": {
+    "isomorphic-ws": "4.0.1",
+    "node-fetch": "2.6.1",
+    "ws": "7.5.3"
+  },
+  "devDependencies": {
+    "@tsconfig/node12": "1.0.9",
+    "@types/node-fetch": "2.5.12",
+    "ts-loader": "9.2.4",
+    "typescript": "4.3.5",
+    "typescript-declaration-webpack-plugin": "0.2.2",
+    "webpack": "5.46.0",
+    "webpack-cli": "4.7.2",
+    "webpack-dev-server": "3.11.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode=production",
+    "build:dev": "webpack --mode=development",
+    "serve": "webpack serve --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xaronnn/js-lanyard.git"
+  },
+  "author": "xaronnn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xaronnn/js-lanyard/issues"
+  },
+  "homepage": "https://github.com/xaronnn/js-lanyard#readme"
+}
