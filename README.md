@@ -4,7 +4,7 @@ Use Lanyard in your Web App. [Phineas](https://github.com/Phineas) - Creator of 
 
 # CDN
 
--   Call to your page (`https://cdn.xaron.pw/lanyard.min.js`)
+-   Call to your page (`https://cdn.jsdelivr.net/gh/xaronnn/js-lanyard/lanyard.min.js`)
 
 # Usage
 
