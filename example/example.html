@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lanyard</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/gh/xaronnn/js-lanyard/lanyard.min.js"></script>
+    <script type="text/javascript">
+        const lanyard = new Lanyard("450421563267874817");
+
+        //HTTP REQUEST
+        (async () => {
+            const data = await lanyard.fetch();
+            console.log(data);
+        })();
+
+        //SOCKET CONNECTION [INIT_STATE, PRESENCE_UPDATE, ALL]
+        lanyard.on("INIT_STATE", (data) => {
+            console.log(data);
+        })
+    </script>
+</body>
+</html>
