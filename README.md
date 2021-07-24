@@ -11,23 +11,33 @@ Use Lanyard in your Web App. [Phineas](https://github.com/Phineas) - Creator of 
 Using without websocket:
 
 ```javascript
-const lanyard = new Lanyard("213325478096797697");
+ // rest with single user example
+lanyard({
+    userId: "213325478096797697",
+}).then(console.log) // presenceData
 
-(async () => {
-    const data = await lanyard.fetch();
-    console.log(data);
-})();
+// rest with multiple  users example
+lanyard({
+    userId: ["213325478096797697", "331846231514939392"],
+}).then(console.log) // presenceData[]
 ```
 
 Using with websocket:
 
 ```javascript
-const lanyard = new Lanyard("213325478096797697");
+// websocket with single user example
+lanyard({
+    userId: "213325478096797697",
+    socket: true,
+    onPresenceUpdate: console.log // presenceData
+}) // returns a websocket
 
-//SOCKET CONNECTION [INIT_STATE, PRESENCE_UPDATE, ALL]
-lanyard.on("INIT_STATE", (data) => {
-    console.log(data);
-})
+// websocket with multiple users example
+lanyard({
+    userId: ["213325478096797697", "331846231514939392"],
+    socket: true,
+    onPresenceUpdate: console.log // presenceData[]
+}) // returns a websocket
 ```
 
 # License

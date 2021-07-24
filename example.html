@@ -7,20 +7,31 @@
     <title>Lanyard</title>
 </head>
 <body>
-    <script src="https://cdn.jsdelivr.net/gh/xaronnn/js-lanyard/lanyard.min.js"></script>
+    <script src="lanyard.js"></script>
     <script type="text/javascript">
-        const lanyard = new Lanyard("213325478096797697");
+        // websocket with single user example
+        lanyard({
+            userId: "213325478096797697",
+            socket: true,
+            onPresenceUpdate: console.log // presenceData
+        }) // returns a websocket
 
-        //HTTP REQUEST
-        (async () => {
-            const data = await lanyard.fetch();
-            console.log(data);
-        })();
+        // websocket with multiple users example
+        lanyard({
+            userId: ["213325478096797697", "331846231514939392"],
+            socket: true,
+            onPresenceUpdate: console.log // presenceData[]
+        }) // returns a websocket
 
-        //SOCKET CONNECTION [INIT_STATE, PRESENCE_UPDATE, ALL]
-        lanyard.on("INIT_STATE", (data) => {
-            console.log(data);
-        })
+        // rest with single user example
+        lanyard({
+            userId: "213325478096797697",
+        }).then(console.log) // presenceData
+
+        // rest with multiple  users example
+        lanyard({
+            userId: ["213325478096797697", "331846231514939392"],
+        }).then(console.log) // presenceData[]
     </script>
 </body>
 </html>
