@@ -4,7 +4,7 @@ Use Lanyard in your Web App. [Phineas](https://github.com/Phineas) - Creator of 
 
 # CDN
 
--   Call to your page (`https://cdn.jsdelivr.net/gh/xaronnn/js-lanyard/lanyard.min.js`)
+-   Call to your page (`https://cdn.jsdelivr.net/gh/xaronnn/js-lanyard/dist/js-lanyard.js`)
 
 # Usage
 
@@ -14,7 +14,7 @@ Using without websocket:
 const lanyard = new Lanyard("213325478096797697");
 
 (async () => {
-    const data = await lanyard.fetch();
+    const data = await lanyard.fetch(); // defaults to this.id
     console.log(data);
 })();
 ```
