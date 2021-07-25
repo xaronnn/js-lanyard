@@ -4,6 +4,11 @@
   "description": "Use Lanyard in your Web App. [Phineas](https://github.com/Phineas) - Creator of [Lanyard API](https://github.com/Phineas/lanyard)",
   "main": "dist/js-lanyard.js",
   "types": "dist/js-lanyard.d.ts",
+  "config": {
+    "ghooks": {
+      "pre-commit": "echo Building && yarn build && git add dist && echo Built"
+    }
+  },
   "dependencies": {
     "isomorphic-ws": "4.0.1",
     "node-fetch": "2.6.1",
@@ -12,6 +17,7 @@
   "devDependencies": {
     "@tsconfig/node12": "1.0.9",
     "@types/node-fetch": "2.5.12",
+    "ghooks": "2.0.4",
     "mocha": "9.0.2",
     "ts-loader": "9.2.4",
     "typescript": "4.3.5",
