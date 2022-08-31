@@ -18,6 +18,7 @@ async function lanyard(opts) {
         
         const socket = new WebSocket(CONSTANTS.WEBSOCKET_URL);
         const subscription = typeof opts.userId == "string" ? "subscribe_to_id" : "subscribe_to_ids"
+        let heartbeat = null
 
         socket.addEventListener("open", () => {
             socket.send(
@@ -29,7 +30,7 @@ async function lanyard(opts) {
                 }),
             );
 
-            setInterval(() => {
+            heartbeat = setInterval(() => {
                 socket.send(
                     JSON.stringify({
                         op: 3,
@@ -46,6 +47,19 @@ async function lanyard(opts) {
             }
         });
 
+        socket.onclose = (event) => {
+          try {
+            console.log("Socket closed")
+            clearInterval(heartbeat)
+            setTimeout(() => {
+                console.log("Trying to reconnect")
+                lanyard(opts)
+            }, 3000)
+          } catch(err) {
+            console.log("Socket closed") 
+          }
+          console.log(event)
+        };
         return socket;
     } else {
         if (typeof opts.userId == "string") {
